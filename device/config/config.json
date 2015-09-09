@@ -1,8 +1,8 @@
 {
-  "climatePort": "B"
-  , "ambientPort": "A"
+  "climatePort": "A"
+  , "servoPort": "D"
   , "refreshRate": 500
-  , "repoUrl": "http://bunnymatic.ngrok.com/api/tessel"
+  , "controllerUrl": "http://successel.ngrok.com/api/status"
   , "wifi" : {
     "network": "Carbon Five Guest"
     , "password": "ritual-book-sorting"
