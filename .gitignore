@@ -3,3 +3,4 @@
 .idea
 device/node_modules/
 device/moodio-usb/node_modules/
+npm-debug.log

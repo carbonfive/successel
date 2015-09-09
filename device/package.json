@@ -21,7 +21,8 @@
     "gulp": "^3.8.8"
   }
   , "scripts": {
-    "start": "tessel run network_data_transfer.js"
+    "deploy": "tessel push network_data_transfer.js"
+    "start": "tessel run network_data_transfer.js --listen all"
     , "blink": "tessel run blinky.js"
   }
 }
