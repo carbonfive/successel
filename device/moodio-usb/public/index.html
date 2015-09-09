@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgl - shadow map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+      body {
+        background-color: #000;
+        margin: 0px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="bower_components/three.js/three.min.js"></script>
+    <script src="js/vendor/three-examples/controls/FirstPersonControls.js"></script>
+    <script src="js/vendor/three-examples/shaders/UnpackDepthRGBAShader.js"></script>
+    <script src="js/vendor/three-examples/Detector.js"></script>
+    <script src="js/vendor/three-examples/libs/stats.min.js"></script>
+
+    <script src="js/sensor_logger.js"></script>
+    <script src="js/stampede.js"></script>
+    <script src="js/stampede_controller.js"></script>
+
+    <script>
+      var socket = io();
+      var controller = new StampedeController();
+      socket.on('sample', function(data){
+        controller.process(data);
+      });
+    </script>
+  </body>
+</html>

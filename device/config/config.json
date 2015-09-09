@@ -1,0 +1,11 @@
+{
+  "climatePort": "B"
+  , "ambientPort": "A"
+  , "refreshRate": 500
+  , "repoUrl": "http://bunnymatic.ngrok.com/api/tessel"
+  , "wifi" : {
+    "network": "Carbon Five Guest"
+    , "password": "ritual-book-sorting"
+    , "maxTimeouts": 3
+  }
+}
