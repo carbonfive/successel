@@ -1,0 +1,27 @@
+doctype html
+
+html
+  head
+    script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
+    javascript:
+      $(function() {
+        $('form').on('submit', function(event) {
+          event.stopPropagation();
+          event.preventDefault();
+
+          var params = {
+            climate: {
+              temperature: $('input[name="temperature"]').val(),
+              humidity: $('input[name="humidity"]').val()
+            }
+          };
+
+          $.ajax({url: '/api/config', method: 'put', data: params});
+        });
+      });
+
+  body
+    form
+      input[type="text" placeholder="temperature" name="temperature"]
+      input[type="text" placeholder="humidity" name="humidity"]
+      button OK
