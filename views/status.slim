@@ -1,0 +1,23 @@
+javascript:
+  var counter = 0;
+  var statuses = [];
+  function getStatus() {
+    $.get('/api/status').then(function(data) {
+      statuses.push(data);
+      //$.plot($('#temperature'), statuses.map(function(item) { return item.climate.temperature; }), {});
+      $.plot($('#temperature'), [statuses.map(function(item, index) { return [index, counter++]; })], {});
+      //$.plot($('#humidity'), statuses.map(function(item) { return item.climate.humidity; }), {});
+    });
+  }
+
+  $(function() {
+    setInterval(getStatus, 500);
+  });
+
+css:
+  div {
+    height: 300px;
+  }
+
+div#temperature
+div#humidity
