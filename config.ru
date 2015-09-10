@@ -1,6 +1,7 @@
 require 'grape'
 require 'sinatra'
 require 'slim'
+require 'active_support/json'
 
 CONFIG = {
   'climate' => {
@@ -45,7 +46,7 @@ class API < Grape::API
   helpers ControlsTester
 
   params do
-    requires :time, type: DateTime, desc: "device timestamp"
+    requires :time, type: Integer, desc: "device timestamp"
     requires :climate, type: Hash, desc: "Climate data" do
       requires :temperature, type: Float
       requires :humidity, type: Float

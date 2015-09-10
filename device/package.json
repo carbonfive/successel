@@ -22,7 +22,7 @@
   }
   , "scripts": {
     "deploy": "tessel push network_data_transfer.js"
-    "start": "tessel run network_data_transfer.js --listen all"
+    , "start": "tessel run network_data_transfer.js --listen all"
     , "blink": "tessel run blinky.js"
   }
 }
