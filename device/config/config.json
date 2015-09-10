@@ -1,6 +1,8 @@
 {
   "climatePort": "A"
-  , "servoPort": "D"
+  , "servoPort": "B"
+  , "relayPort": "C"
+  , "relayId": 1
   , "refreshRate": 500
   , "controllerUrl": "http://successel.ngrok.com/api/status"
   , "wifi" : {

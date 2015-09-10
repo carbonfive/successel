@@ -6,8 +6,9 @@ var climatelib = require('climate-si7020');
 var needle = require("needle");
 var config = require("./config/config.json");
 var servolib = require('servo-pca9685');
-var servo = servolib.use(tessel.port['D']);
-
+var servo = servolib.use(tessel.port[config.servoPort]);
+var relaylib = require("relay-mono");
+var relay = relaylib.use(tessel.port[config.relayPort]);
 var climate = climatelib.use(tessel.port[config.climatePort]);
 
 function getClimateData() {
@@ -33,8 +34,7 @@ function postData(data) {
 
     if (success) {
       console.log("SUCCESS")
-//      handleResponseActions(response.body)
-      activateServo(1, 0.1);
+      handleResponseActions(resp.body)
     } else {
       console.log("FAIL", error)
     }
@@ -43,22 +43,60 @@ function postData(data) {
   });
 }
 
-var pos = 0;
+function resetAll() {
+  turnOffRelay()
+  resetServos()
+}
+
+function turnOnRelay() {
+  relay.turnOn(1, function(err) { console.log(err); });
+}
+
+function turnOffRelay() {
+  relay.turnOff(1, function(err) { console.log(err); });
+}
+
+var currentServoPosition = 0;
+
+function resetServos() {
+  currentServoPosition = 0;
+  servo.move(1, currentservoPosition);
+};
+
 function activateServo(id, degrees) {
-  pos += degrees
-  if (pos >= 1) {
-    pos = 0;
+  currentServoPosition += degrees
+  if (currentServoPosition >= 1) {
+    currentServoPosition = 0;
   }
-  servo.move(id, pos);
+  servo.move(id, currentServoPosition);
 }
 
 function handleResponseActions(actions) {
+  console.log("Actions %j", actions);
+  resetAll()
   if (actions.servo1 != null) {
     activateServo(1, actions.servo1);
   }
   if (actions.servo2 != null) {
     activateServo(2, actions.servo2);
   }
+  if (actions.relay == 'test') {
+    console.log("TESTING");
+    turnOnRelay();
+    setTimeout(turnOffRelay, 1000);
+  }
+  if (actions.relay == 'on') {
+    turnOnRelay();
+  }
+  if (actions.relay == 'off') {
+    turnOffRelay();
+  }
+}
+
+function toggleRelay(relayId) {
+  relay.toggle(relayId, function(err) {
+    console.log("Toggle1", err);
+  });
 }
 
 servo.configure(1, .05, .12, function() {

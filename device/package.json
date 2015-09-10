@@ -15,7 +15,7 @@
     , "wifi-cc3000": ""
     , "async": ""
     , "servo-pca9685": ""
-
+    , "relay-mono": ""
   }
   , "devDependencies": {
     "gulp": "^3.8.8"
