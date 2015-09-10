@@ -1,0 +1,34 @@
+doctype html
+
+html
+  head
+    script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
+    javascript:
+      // onclick fan
+      $(function() {
+        $('button.fan').on('click', function(event){
+          $.ajax({
+            url: '/api/test',
+            method: 'put',
+            data: {controls:['relay']}
+          });
+        });
+      });
+
+      //onclick humidifier
+      $(function() {
+        $('button.humidifier').on('click', function(event){
+          $.ajax({
+            url: '/api/test',
+            method: 'put',
+            data: {controls:['servo1']}
+          });
+        });
+      });
+
+    css:
+
+  body
+    h1 Test Your Hume
+    button.fan Test Fan
+    button.humidifier Test Humidifier

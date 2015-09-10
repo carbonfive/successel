@@ -42,10 +42,39 @@ html
             });
           });
         });
+
+        $('input[name="temperature"]').on('change', function(event){
+          $('span.temperature').text(event.target.value);
+        });
+
+        $('input[name="humidity"]').on('change', function(event){
+          $('span.humidity').text(event.target.value);
+        });
       });
+
+    css:
+      input {
+        display: inline-block
+      }
 
   body
     form
-      input[type="text" placeholder="temperature" name="temperature"]
-      input[type="text" placeholder="humidity" name="humidity"]
+      label Temperature
+      span.temperature 20
+      br
+      span 10
+      input[type="range" placeholder="temperature" name="temperature" min="10" max="35" step="1" value="20"]
+      span 35
+
+      br
+      label Humidity
+      span.humidity 90
+      br
+      span 0
+      input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
+      span 100
+
+      br
       button OK
+
+    a(href='/test') Test your Hume

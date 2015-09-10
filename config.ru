@@ -34,7 +34,7 @@ module ControlsTester
   end
 
   def set_test controls
-    @@test = controls
+    @@test += controls
   end
 end
 
@@ -109,6 +109,7 @@ class API < Grape::API
   end
 
   put :test do
+    puts params
     set_test params[:controls]
   end
 
@@ -120,6 +121,10 @@ end
 class Web < Sinatra::Base
   get '/' do
     slim :index
+  end
+
+  get '/test' do
+    slim :test
   end
 end
 
