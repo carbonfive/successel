@@ -81,13 +81,6 @@ class API < Grape::API
   end
 
   params do
-    optional :climate, type: Hash, desc: "Climate data" do
-      optional :temperature, type: Float
-      optional :humidity, type: Float
-    end
-  end
-
-  params do
     requires :sensor, type: String, desc: 'The sensor to configure'
     requires :measurement, type: String, desc: 'The measurement to monitor'
     requires :value, type: String, desc: 'The triggering value'
