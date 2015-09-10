@@ -1,1 +1,14 @@
+javascript:
+  $(function() {
+    $('#activate').on('click', function() {
+      $.ajax({
+        url: "/api/activate/",
+        method: "PUT"
+      }).then(function() {
+        $("#activate").html('Energized!')
+      });
+    });
+  });
+
 h1 Go!
+a#activate.btn href="#" Energize!

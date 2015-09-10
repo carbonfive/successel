@@ -1,5 +1,5 @@
 javascript:
-  function submitConfig() {
+  function submitConfig(cb) {
     var configs = [];
     configs.push({
       sensor: 'climate',
@@ -22,7 +22,7 @@ javascript:
       measurement: "humidity",
       value: $('input[name="humidity"]').val(),
       test: 'lt',
-      actions: { servo1: 1 }
+      actions: { servo1: 0.4 }
     });
 
     configs.push({
@@ -33,24 +33,28 @@ javascript:
       actions: { servo1: 0 }
     });
 
-    configs.forEach(function(config) {
-      $.ajax({
+    configResults = configs.map(function(config) {
+      return $.ajax({
         url: '/api/config',
         method: 'put',
         data: config
       });
     });
+
+    $.when.apply($, configResults).then(cb);
   }
 
   $(function() {
     $('input[name="temperature"]').on('change', function(event){
       $('span.temperature').text(event.target.value);
-      submitConfig();
     });
 
     $('input[name="humidity"]').on('change', function(event){
       $('span.humidity').text(event.target.value);
-      submitConfig();
+    });
+
+    $('#go').on('click', function() {
+      submitConfig(function() { window.location.href = '/go'; });
     });
   });
 
@@ -72,4 +76,4 @@ form
       input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
       span 100
 
-a(href='/go') Start using your Hume!
+a#go(href='#') Start using your Hume!

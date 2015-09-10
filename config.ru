@@ -101,6 +101,7 @@ class API < Grape::API
         ->(value) { value == threshold }
       end
 
+    p actions
     CONFIG[sensor][measurement].push('test' => test, 'actions' => actions)
   end
 

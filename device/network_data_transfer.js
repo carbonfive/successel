@@ -56,20 +56,23 @@ function turnOffRelay() {
   relay.turnOff(1, function(err) { console.log(err); });
 }
 
-var currentServoPosition = 0;
-
+function closeServo() {
+  servo.move(1,0)
+}
+function openServo() {
+  servo.move(1,0.4)
+}
 function resetServos() {
-  currentServoPosition = 0;
-  servo.move(1, currentservoPosition);
+  closeServo();
 };
 
-function activateServo(id, degrees) {
-  currentServoPosition += degrees
-  if (currentServoPosition >= 1) {
-    currentServoPosition = 0;
-  }
-  servo.move(id, currentServoPosition);
-}
+// function activateServo(id, degrees) {
+//   currentServoPosition += degrees
+//   if (currentServoPosition >= 1) {
+//     currentServoPosition = 0;
+//   }
+//   servo.move(id, currentServoPosition);
+// }
 
 function handleResponseActions(actions) {
   console.log("Actions %j", actions);
@@ -80,7 +83,7 @@ function handleResponseActions(actions) {
     setTimeout(function() { servo.move(1, 0) }, 500);
   }
   else if (actions.servo1) {
-    activateServo(1, actions.servo1);
+    servo.move(1, parseFloat(actions.servo1));
   }
 
   if (actions.relay == 'test') {

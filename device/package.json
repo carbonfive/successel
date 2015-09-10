@@ -22,7 +22,8 @@
   }
   , "scripts": {
     "deploy": "tessel push network_data_transfer.js"
-    , "start": "tessel run network_data_transfer.js --listen all"
+    , "start": "tessel stop && tessel erase && tessel run network_data_transfer.js --listen all"
+    , "reset": "tessel stop && tessel wifi -d && tessel erase"
     , "blink": "tessel run blinky.js"
   }
 }
