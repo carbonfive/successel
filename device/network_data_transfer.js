@@ -74,16 +74,19 @@ function activateServo(id, degrees) {
 function handleResponseActions(actions) {
   console.log("Actions %j", actions);
   resetAll()
-  if (actions.servo1 != null) {
+  if (actions.servo1 == 'test') {
+    console.log("TEST SERVO")
+    servo.move(1, 1);
+    setTimeout(function() { servo.move(1, 0) }, 500);
+  }
+  else if (actions.servo1) {
     activateServo(1, actions.servo1);
   }
-  if (actions.servo2 != null) {
-    activateServo(2, actions.servo2);
-  }
+
   if (actions.relay == 'test') {
     console.log("TESTING");
     turnOnRelay();
-    setTimeout(turnOffRelay, 1000);
+    setTimeout(turnOffRelay, 500);
   }
   if (actions.relay == 'on') {
     turnOnRelay();

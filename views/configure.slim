@@ -1,28 +1,36 @@
 javascript:
   function submitConfig() {
-    var multiplier = 1, configs = [];
-    ['lt', 'gt'].forEach(function(test) {
-      configs.push({
-        sensor: 'climate',
-        measurement: "temperature",
-        value: $('input[name="temperature"]').val(),
-        test: test,
-        actions: { servo1: 90 * multiplier }
-      });
-
-      multiplier = multiplier * -1;
+    var configs = [];
+    configs.push({
+      sensor: 'climate',
+      measurement: "temperature",
+      value: $('input[name="temperature"]').val(),
+      test: 'lt',
+      actions: { relay: 'off' }
     });
 
-    ['lt', 'gt'].forEach(function(test) {
-      configs.push({
-        sensor: 'climate',
-        measurement: "humidity",
-        value: $('input[name="humidity"]').val(),
-        test: test,
-        actions: { servo2: 90 * multiplier }
-      })
+    configs.push({
+      sensor: 'climate',
+      measurement: "temperature",
+      value: $('input[name="temperature"]').val(),
+      test: 'gt',
+      actions: { relay: 'on' }
+    });
 
-      multiplier = multiplier * -1;
+    configs.push({
+      sensor: 'climate',
+      measurement: "humidity",
+      value: $('input[name="humidity"]').val(),
+      test: 'lt',
+      actions: { servo1: 1 }
+    });
+
+    configs.push({
+      sensor: 'climate',
+      measurement: "humidity",
+      value: $('input[name="humidity"]').val(),
+      test: 'gt',
+      actions: { servo1: 0 }
     });
 
     configs.forEach(function(config) {
