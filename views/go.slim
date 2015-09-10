@@ -5,7 +5,7 @@ javascript:
         url: "/api/activate/",
         method: "PUT"
       }).then(function() {
-        $("#activate").html('Energized!')
+        window.location.href = "/status"
       });
     });
   });

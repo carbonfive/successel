@@ -4,6 +4,7 @@ require 'slim'
 require 'active_support/json'
 
 CONFIG = {
+  'last_status' => nil,
   'climate' => {
     'temperature' => [],
     'humidity' => [],
@@ -65,6 +66,7 @@ class API < Grape::API
     end
 
     if active?
+      CONFIG['last_status'] = params
       ['temperature', 'humidity'].each do |sensor_type|
         CONFIG['climate'][sensor_type].each do |config|
           if config['test'].call(params['climate'][sensor_type])
@@ -116,6 +118,10 @@ class API < Grape::API
   put :activate do
     activate!
   end
+
+  get :status do
+    CONFIG['last_status'] || {}
+  end
 end
 
 class Web < Sinatra::Base
@@ -137,6 +143,10 @@ class Web < Sinatra::Base
 
   get '/go' do
     slim :go
+  end
+
+  get '/status' do
+    slim :status
   end
 end
 

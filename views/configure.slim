@@ -21,7 +21,7 @@ javascript:
       sensor: 'climate',
       measurement: "humidity",
       value: $('input[name="humidity"]').val(),
-      test: 'lt',
+      test: 'gt',
       actions: { servo1: 0.4 }
     });
 
@@ -29,7 +29,7 @@ javascript:
       sensor: 'climate',
       measurement: "humidity",
       value: $('input[name="humidity"]').val(),
-      test: 'gt',
+      test: 'lt',
       actions: { servo1: 0 }
     });
 
