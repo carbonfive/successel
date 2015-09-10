@@ -39,7 +39,7 @@ function postData(data) {
       console.log("FAIL", error)
     }
 
-    setTimeout( getClimateData, 100)
+    setTimeout( getClimateData, 300)
   });
 }
 

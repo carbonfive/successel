@@ -1,0 +1,47 @@
+javascript:
+  var counter = 0;
+  var statuses = [];
+  function getStatus() {
+    $.get('/api/status').then(function(data) {
+      if (!data.time) {
+        return;
+      }
+
+
+      statuses.push(data);
+      var temperatureData = {
+        data: statuses.map(function(item, index) { return [index, item.climate.temperature]; }),
+        color: "orange",
+        lines: { show: true, fill: true },
+        label: 'Temperature'
+      };
+
+      var humidityData = {
+        data: statuses.map(function(item, index) { return [index, item.climate.humidity]; }),
+        color: "blue",
+        lines: { show: true, fill: true },
+        label: 'Humidity'
+      };
+
+      $.plot($('#temperature .graph'), [temperatureData]);
+      $.plot($('#humidity .graph'), [humidityData]);
+    });
+  }
+
+  $(function() {
+    setInterval(getStatus, 500);
+  });
+
+css:
+  .graph-container {
+    height: 300px;
+  }
+
+  .graph {
+    height: 100%;
+  }
+
+#temperature.graph-container
+  .graph
+#humidity.graph-container
+  .graph
