@@ -9,14 +9,38 @@ html
           event.stopPropagation();
           event.preventDefault();
 
-          var params = {
-            climate: {
-              temperature: $('input[name="temperature"]').val(),
-              humidity: $('input[name="humidity"]').val()
-            }
-          };
+          var multiplier = 1, configs = [];
+          ['lt', 'gt'].forEach(function(test) {
+            configs.push({
+              sensor: 'climate',
+              measurement: "temperature",
+              value: $('input[name="temperature"]').val(),
+              test: test,
+              actions: { servo1: 90 * multiplier }
+            });
 
-          $.ajax({url: '/api/config', method: 'put', data: params});
+            multiplier = multiplier * -1;
+          });
+
+          ['lt', 'gt'].forEach(function(test) {
+            configs.push({
+              sensor: 'climate',
+              measurement: "humidity",
+              value: $('input[name="humidity"]').val(),
+              test: test,
+              actions: { servo2: 90 * multiplier }
+            })
+
+            multiplier = multiplier * -1;
+          });
+
+          configs.forEach(function(config) {
+            $.ajax({
+              url: '/api/config',
+              method: 'put',
+              data: config
+            });
+          });
         });
       });
 

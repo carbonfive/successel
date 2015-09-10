@@ -3,15 +3,46 @@ require 'sinatra'
 require 'slim'
 
 CONFIG = {
-  climate: {
-    temperature: [],
-    humidity: [],
+  'climate' => {
+    'temperature' => [],
+    'humidity' => [],
   }
 }
+
+module Activator
+  @@active = false
+
+  def active?
+    @@active
+  end
+
+  def activate!
+    @@active = true
+  end
+end
+
+module ControlsTester
+  @@test = []
+
+  def test
+    @@test
+  end
+
+  def reset_test
+    @@test = []
+  end
+
+  def set_test controls
+    @@test = controls
+  end
+end
 
 class API < Grape::API
   format :json
   prefix :api
+
+  helpers Activator
+  helpers ControlsTester
 
   params do
     requires :time, type: DateTime, desc: "device timestamp"
@@ -22,15 +53,23 @@ class API < Grape::API
   end
 
   put :status do
-    puts params.inspect
-
     actions = {}
 
-    [:temperature, :humidity].each do |sensor_type|
-      CONFIG[:climate][sensor_type].each do |config|
-        if config[:test].call(params[:climate][sensor_type])
-          puts "Matched #{sensor_type}"
-          actions.merge!(config[:actions])
+    if test.any?
+      test.each do |k|
+        actions[k] = 'test'
+      end
+
+      reset_test
+    end
+
+    if active?
+      ['temperature', 'humidity'].each do |sensor_type|
+        CONFIG['climate'][sensor_type].each do |config|
+          if config['test'].call(params['climate'][sensor_type])
+            puts "Matched #{sensor_type}"
+            actions.merge!(config['actions'])
+          end
         end
       end
     end
@@ -47,38 +86,40 @@ class API < Grape::API
     end
   end
 
+  params do
+    requires :sensor, type: String, desc: 'The sensor to configure'
+    requires :measurement, type: String, desc: 'The measurement to monitor'
+    requires :value, type: String, desc: 'The triggering value'
+    requires :test, type: String, desc: 'The type of test'
+  end
+
   put :config do
-    if params[:climate][:temperature]
-      CONFIG[:climate][:temperature].push({
-        test: ->(value) { params[:climate][:temperature] < value },
-        actions: {
-          servo1: -90
-        }
-      })
+    sensor = params[:sensor]
+    measurement = params[:measurement]
+    threshold = params[:value].to_f
+    actions = params[:actions]
+    test = case params[:test].downcase
+      when "lt"
+        ->(value) { value < threshold }
+      when "gt"
+        ->(value) { value > threshold }
+      when "eq"
+        ->(value) { value == threshold }
+      end
 
-      CONFIG[:climate][:temperature].push({
-        test: ->(value) { params[:climate][:temperature] > value },
-        actions: {
-          servo1: 90
-        }
-      })
-    end
+    CONFIG[sensor][measurement].push('test' => test, 'actions' => actions)
+  end
 
-    if params[:climate][:humidity]
-      CONFIG[:climate][:humidity].push({
-        test: ->(value) { params[:climate][:humidity] < value },
-        actions: {
-          servo2: -90
-        }
-      })
+  params do
+    requires :controls, type: Array[String], desc: "Controls to test"
+  end
 
-      CONFIG[:climate][:humidity].push({
-        test: ->(value) { params[:climate][:humidity] > value },
-        actions: {
-          servo2: 90
-        }
-      })
-    end
+  put :test do
+    set_test params[:controls]
+  end
+
+  put :activate do
+    activate!
   end
 end
 
@@ -89,19 +130,3 @@ class Web < Sinatra::Base
 end
 
 run Rack::Cascade.new [API, Web]
-
-#{
-#  climate: {
-#    temperature: [
-#      {
-#        test: function(value) { },
-#        actions: { }
-#      },
-#
-#      {
-#        test: function(value) { },
-#        actions: { }
-#      }
-#    ]
-#  }
-#}
