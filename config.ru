@@ -109,7 +109,6 @@ class API < Grape::API
   end
 
   put :test do
-    puts params
     set_test params[:controls]
   end
 

@@ -47,20 +47,21 @@ javascript:
   });
 
 form
-  div
-    label Temperature
-    span.temperature 20
-    br
-    span 10
-    input[type="range" placeholder="temperature" name="temperature" min="10" max="35" step="1" value="20"]
-    span 35
+  div.controls
+    div
+      label Temperature
+      span.temperature 20
+      br
+      span 10
+      input[type="range" placeholder="temperature" name="temperature" min="10" max="35" step="1" value="20"]
+      span 35
 
-  div
-    label Humidity
-    span.humidity 90
-    br
-    span 0
-    input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
-    span 100
+    div
+      label Humidity
+      span.humidity 90
+      br
+      span 0
+      input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
+      span 100
 
 a(href='/go') Start using your Hume!

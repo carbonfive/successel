@@ -5,10 +5,39 @@ html
     link[href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css']
     script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
     css:
-
-    javascript:
-      $(function() {
-      });
+      * {
+        font-family: 'Lato';
+        text-align: center;
+      }
+      li {
+        text-align: left;
+      }
+      a, button {
+        background-image: url('Top Bar.png');
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        outline: 0;
+        border: 0;
+        margin: 10px;
+      }
+      header {
+        background-image: url('Top Bar.png');
+        padding: 1px;
+      }
+      div.logo {
+        background-image: url('logo_2.png');
+        background-size: 85px 30px;
+        background-repeat: no-repeat;
+        width: 85px;
+        height: 30px;
+        margin: 10px auto;
+      }
+      div.controls {
+        margin-bottom: 20px;
+      }
 
   body
+    header
+      div.logo
     == yield
