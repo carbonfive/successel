@@ -46,11 +46,11 @@ javascript:
 
   $(function() {
     $('input[name="temperature"]').on('change', function(event){
-      $('span.temperature').text(event.target.value);
+      $('.temperature_value').text(event.target.value + '°');
     });
 
     $('input[name="humidity"]').on('change', function(event){
-      $('span.humidity').text(event.target.value);
+      $('.humidity_value').text(event.target.value + '%');
     });
 
     $('#go').on('click', function() {
@@ -60,20 +60,16 @@ javascript:
 
 form
   div.controls
-    div
-      label Temperature
-      span.temperature 20
-      br
-      span 10
+    div.temperature
+      img[src="/Configure_Assets/HUMIDITY ICON.png"]
+      p Temperature
       input[type="range" placeholder="temperature" name="temperature" min="10" max="35" step="1" value="20"]
-      span 35
+      p.temperature_value 20°
 
-    div
-      label Humidity
-      span.humidity 90
-      br
-      span 0
+    div.humidity
+      img[src="/Configure_Assets/Temperature icon.png"]
+      p Humidity
       input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
-      span 100
+      p.humidity_value 90%
 
-a.button#go(href='#') Start using your Hume!
+a.button.next_button#go(href='#') OK

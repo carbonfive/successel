@@ -10,6 +10,13 @@ html
         text-align: center;
         box-sizing: border-box;
       }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      textarea, input {
+        outline: none;
+      }
       li {
         text-align: left;
       }
@@ -21,6 +28,13 @@ html
         outline: 0;
         border: 0;
         margin: 10px;
+        border-radius: 4px;
+      }
+      .next_button {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
       .test_button {
         display: block;
@@ -61,16 +75,52 @@ html
       }
       div.controls {
         margin-bottom: 20px;
+        width: 100%;
       }
       div.controls div {
-        margin-top: 20px;
-        margin-bottom: 20px;
+        padding: 4px;
+        background-color: #eee;
+        max-width: 240px;
+        margin: 10px auto 0 auto;
+        border-radius: 4px;
+      }
+      div.controls img {
+        display: block;
+        width: 30px;
+        height: 30px;
+        margin: 20px auto 0 auto;
       }
       img {
         width: 100%;
       }
       .setup_video {
         width: 100%;
+      }
+      input[type='range'] {
+        -webkit-appearance: none;
+        background-color: #eee;
+        width: 200px;
+        height: 20px;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background-image: url("/Configure_Assets/Humidty slider/slider circle 2.png");
+        background-size: 8px 8px;
+        width: 8px;
+        height: 8px;
+      }
+      .temperature input[type='range'] {
+        background-image: url("/Configure_Assets/Temperature SLider/temp_Slider_top.png");
+        background-size: 200px 20px;
+      }
+      .humidity input[type='range'] {
+        background-image: url("/Configure_Assets/Humidty slider/humidity_Slider_top.png");
+        background-size: 200px 20px;
+      }
+      .humidity_value, .temperature_value {
+        font-weight: bold;
+        font-size: 1.3em;
+        margin-top: 0;
       }
 
   body
