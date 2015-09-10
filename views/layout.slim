@@ -8,11 +8,12 @@ html
       * {
         font-family: 'Lato';
         text-align: center;
+        box-sizing: border-box;
       }
       li {
         text-align: left;
       }
-      a, button {
+      button, .button {
         background-image: url('Top Bar.png');
         color: white;
         text-decoration: none;
@@ -21,9 +22,34 @@ html
         border: 0;
         margin: 10px;
       }
+      .test_button {
+        display: block;
+        color: black;
+        width: 240px;
+        background-image: none;
+        background-color: #eee;
+        padding: 10px 0;
+        margin: 10px auto;
+      }
+      .test_button img {
+        display: block;
+        margin: auto;
+      }
+      .test_button.fan img {
+        width: 77px;
+        height: 77px;
+      }
+      .test_button.humidifier img {
+        width: 47px;
+        height: 68px;
+      }
       header {
         background-image: url('Top Bar.png');
         padding: 1px;
+        color: white;
+      }
+      sub {
+        font-size: 0.7em;
       }
       div.logo {
         background-image: url('logo_2.png');
@@ -36,8 +62,15 @@ html
       div.controls {
         margin-bottom: 20px;
       }
+      img {
+        width: 100%;
+      }
+      .setup_video {
+        width: 100%;
+      }
 
   body
     header
       div.logo
+      sub Smart Environmental Control Systems
     == yield

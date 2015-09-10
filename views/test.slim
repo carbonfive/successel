@@ -1,7 +1,7 @@
 javascript:
   // onclick fan
   $(function() {
-    $('button.fan').on('click', function(event){
+    $('.button.fan').on('click', function(event){
       $.ajax({
         url: '/api/test',
         method: 'put',
@@ -12,7 +12,7 @@ javascript:
 
   //onclick humidifier
   $(function() {
-    $('button.humidifier').on('click', function(event){
+    $('.button.humidifier').on('click', function(event){
       $.ajax({
         url: '/api/test',
         method: 'put',
@@ -22,8 +22,14 @@ javascript:
   });
 
 h1 Test Your Hume
-button.fan Test Fan
-button.humidifier Test Humidifier
 
-p Next:
-a[href="/configure"] Configure your Hume
+a.button.test_button.fan[href="#"]
+  img[src="/FAN.png"]
+  span Test Fan
+
+a.button.test_button.humidifier[href="#"]
+  img[src="/Test_Assets/humidifer.png"]
+  span Test Humidifier
+br
+
+a.button[href="/configure"] Configure your Hume
