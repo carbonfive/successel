@@ -123,6 +123,14 @@ class Web < Sinatra::Base
     slim :index
   end
 
+  get '/setup' do
+    slim :setup
+  end
+
+  get '/configure' do
+    slim :configure
+  end
+
   get '/test' do
     slim :test
   end

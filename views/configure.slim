@@ -1,0 +1,73 @@
+doctype html
+
+html
+  head
+    script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
+    javascript:
+      function submitConfig() {
+        var multiplier = 1, configs = [];
+        ['lt', 'gt'].forEach(function(test) {
+          configs.push({
+            sensor: 'climate',
+            measurement: "temperature",
+            value: $('input[name="temperature"]').val(),
+            test: test,
+            actions: { servo1: 90 * multiplier }
+          });
+
+          multiplier = multiplier * -1;
+        });
+
+        ['lt', 'gt'].forEach(function(test) {
+          configs.push({
+            sensor: 'climate',
+            measurement: "humidity",
+            value: $('input[name="humidity"]').val(),
+            test: test,
+            actions: { servo2: 90 * multiplier }
+          })
+
+          multiplier = multiplier * -1;
+        });
+
+        configs.forEach(function(config) {
+          $.ajax({
+            url: '/api/config',
+            method: 'put',
+            data: config
+          });
+        });
+      }
+      $(function() {
+        $('input[name="temperature"]').on('change', function(event){
+          $('span.temperature').text(event.target.value);
+          submitConfig();
+        });
+
+        $('input[name="humidity"]').on('change', function(event){
+          $('span.humidity').text(event.target.value);
+          submitConfig();
+        });
+      });
+
+    css:
+
+  body
+    form
+      div
+        label Temperature
+        span.temperature 20
+        br
+        span 10
+        input[type="range" placeholder="temperature" name="temperature" min="10" max="35" step="1" value="20"]
+        span 35
+
+      div
+        label Humidity
+        span.humidity 90
+        br
+        span 0
+        input[type="range" placeholder="humidity" name="humidity" min="0" max="100" step="1" value="90"]
+        span 100
+
+    a(href='/test') Test your Hume
