@@ -39,7 +39,7 @@ function postData(data) {
       console.log("FAIL", error)
     }
 
-    setTimeout( getClimateData, 300)
+    setTimeout( getClimateData, 500)
   });
 }
 
@@ -60,7 +60,7 @@ function closeServo() {
   servo.move(1,0)
 }
 function openServo() {
-  servo.move(1,0.4)
+  servo.move(1,0.25)
 }
 function resetServos() {
   closeServo();
@@ -79,7 +79,7 @@ function handleResponseActions(actions) {
   resetAll()
   if (actions.servo1 == 'test') {
     console.log("TEST SERVO")
-    servo.move(1, 1);
+    servo.move(1, 0.25);
     setTimeout(function() { servo.move(1, 0) }, 500);
   }
   else if (actions.servo1) {
@@ -107,7 +107,7 @@ function toggleRelay(relayId) {
 
 servo.configure(1, .05, .12, function() {
   climate.on('ready', function (err) {
-    servo.move(1, 1);
+    servo.move(1, 0.25);
     getClimateData()
     console.log("Climate Module Ready")
   });
